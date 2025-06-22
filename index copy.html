@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burcu ❤️ Seni Çok Seviyorum</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 900px;
+            width: 90%;
+        }
+
+        .initial-screen {
+            opacity: 1;
+            transition: opacity 1s ease-out;
+        }
+
+        .initial-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .love-screen {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+            transition: all 1s ease-out;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 90%;
+            max-width: 900px;
+            display: none;
+        }
+
+        .love-screen.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            display: block;
+        }
+
+        h1 {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+            font-weight: bold;
+        }
+
+        @keyframes glow {
+            from { 
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.3);
+                transform: scale(1);
+            }
+            to { 
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 30px rgba(255,255,255,0.6);
+                transform: scale(1.02);
+            }
+        }
+
+        .heart-container {
+            position: relative;
+            margin: 50px auto;
+            width: 220px;
+            height: 220px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .heart-container:hover {
+            transform: scale(1.15);
+            filter: brightness(1.2);
+        }
+
+        .heart {
+            width: 110px;
+            height: 100px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            animation: heartbeat 1.2s ease-in-out infinite;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: '';
+            width: 57px;
+            height: 88px;
+            position: absolute;
+            left: 55px;
+            top: 0;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border-radius: 55px 55px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+            box-shadow: 0 0 25px rgba(255, 107, 107, 0.8);
+        }
+
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            25% { transform: translate(-50%, -50%) scale(1.15); }
+            50% { transform: translate(-50%, -50%) scale(1); }
+            75% { transform: translate(-50%, -50%) scale(1.08); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .click-text {
+            color: white;
+            font-size: 1.4rem;
+            margin-top: 25px;
+            animation: pulse 2s infinite;
+            font-weight: 500;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 0.7; transform: scale(1); }
+        }
+
+        .letter-container {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 25px;
+            padding: 50px;
+            margin: 30px auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            backdrop-filter: blur(15px);
+            max-width: 700px;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: slideIn 1.2s ease-out 0.5s forwards;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .letter-title {
+            color: #667eea;
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .letter-content {
+            color: #333;
+            font-size: 1.2rem;
+            line-height: 1.9;
+            text-align: left;
+            margin-bottom: 35px;
+        }
+
+        .letter-content p {
+            margin-bottom: 20px;
+            text-indent: 20px;
+        }
+
+        .signature {
+            color: #667eea;
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-align: right;
+            font-style: italic;
+            margin-top: 30px;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 25px;
+            color: rgba(255, 107, 107, 0.8);
+            animation: float 5s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .music-note {
+            position: fixed;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 28px;
+            animation: musicFloat 7s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes musicFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120px) translateX(60px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .photo-frame {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-frame:hover {
+            transform: scale(1.05);
+        }
+
+        .memory-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .memory-title {
+            color: #667eea;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .memory-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .memory-item {
+            background: linear-gradient(45deg, #ffeaa7, #fab1a0);
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 15px;
+            color: #2d3436;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: slideInMemory 0.8s ease-out forwards;
+        }
+
+        .memory-item:nth-child(1) { animation-delay: 0.2s; }
+        .memory-item:nth-child(2) { animation-delay: 0.4s; }
+        .memory-item:nth-child(3) { animation-delay: 0.6s; }
+        .memory-item:nth-child(4) { animation-delay: 0.8s; }
+        .memory-item:nth-child(5) { animation-delay: 1.0s; }
+
+        @keyframes slideInMemory {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .promise-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .promise-title {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .promise-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .interactive-button {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .countdown-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .countdown-title {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .countdown-display {
+            font-size: 2.5rem;
+            color: #ff6b6b;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .letter-container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            .letter-title {
+                font-size: 2.2rem;
+            }
+            
+            .heart-container {
+                width: 180px;
+                height: 180px;
+            }
+
+            .memory-section, .promise-section, .countdown-section {
+                padding: 25px 15px;
+                margin: 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="floating-hearts"></div>
+    
+    <div class="container">
+        <div class="initial-screen" id="initial-screen">
+            <h1>Burcu ❤️</h1>
+            <div class="heart-container" onclick="showLove()">
+                <div class="heart"></div>
+            </div>
+            <p class="click-text">Kalbe tıkla ve sürprizi gör! 💕</p>
+        </div>
+
+        <div class="love-screen" id="love-screen">
+            <div class="letter-container">
+                <h2 class="letter-title">Canım Burcu'ma ❤️</h2>
+                <div class="letter-content">
+                    <p>Merhaba güzel kalbim,</p>
+                    <p>Bu sayfayı sadece senin için, seni ne kadar çok sevdiğimi anlatmak için hazırladım. Her gün seninle olmak, gülüşünü görmek, sesini duymak beni dünyanın en mutlu insanı yapıyor.</p>
+                    <p>Sen benim hayatımdaki en güzel şarkısın, en parlak yıldızımsın. Seninle geçirdiğim her an bir hediye, her gülüşün kalbimde yeni çiçekler açtırıyor.</p>
+                    <p>Seni sevmek benim için nefes almak kadar doğal, güneşin doğması kadar kesin. Sen benim dünyamın rengi, hayatımın anlamısın.</p>
+                    <p>Bu küçük sürprizi beğeneceğini umarım. Sen ne kadar özelsin bil istiyorum. Seni sonsuza kadar seviyorum... ❤️</p>
+                </div>
+                <div class="signature">Seni çok seven, ❤️</div>
+            </div>
+
+            <div class="memory-section">
+                <h3 class="memory-title">Seninle Yaşadığım En Güzel Anlar 💕</h3>
+                <ul class="memory-list">
+                    <li class="memory-item">🌅 İlk Gördüğüm an o büyülü an - kalbim hala aynı hızla çarpıyor</li>
+                    <li class="memory-item">☕ Birlikte Sabha kadar telefonla görüştüğümüz gün</li>
+                    <li class="memory-item">🌙 Yıldızları Bakarak Düşündüğüm o geceler</li>
+                    <li class="memory-item">😂 Birlikte güldüğümüz tüm o güzel anlar</li>
+                    <li class="memory-item">🤗 Keşke Seni Sarıla Bilseydim</li>
+                </ul>
+            </div>
+
+            <div class="photo-gallery">
+                <div class="photo-frame">
+                    📸<br>Buraya senin<br>en güzel fotoğrafın<br>gelecek ❤️
+                </div>
+                <div class="photo-frame">
+                    📸<br>Birlikte çektiğimiz<br>o harika fotoğraf<br>💕
+                </div>
+                <div class="photo-frame">
+                    📸<br>Gülüşünün<br>en güzel hali<br>😊
+                </div>
+            </div>
+
+            <div class="countdown-section">
+                <h3 class="countdown-title">Seni Seveli Geçen Süre ⏰</h3>
+                <div class="countdown-display" id="loveCounter">
+                    Hesaplanıyor... ❤️
+                </div>
+            </div>
+
+            <div class="promise-section">
+                <h3 class="promise-title">Sana Verdiğim Sözler 💍</h3>
+                <p class="promise-text">
+                    Seni her gün daha çok seveceğim, yanında olacağım, 
+                    gülümsemeni sağlayacağım ve hayallerini gerçekleştirmek için 
+                    elimden geleni yapacağım. Sen benim en değerli hazinemsin! ✨
+                </p>
+            </div>
+
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="interactive-button" onclick="showSurprise()">🎁 Özel Sürpriz</button>
+                <button class="interactive-button" onclick="playLoveSound()">🎵 Aşk Melodisi</button>
+                <button class="interactive-button" onclick="createHeartExplosion()">💥 Kalp Patlaması</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let loveStartDate = new Date('2025-04-13'); // 13 Nisan 2025 - Tanışma tarihiniz
+        
+        function showLove() {
+            const initialScreen = document.getElementById('initial-screen');
+            const loveScreen = document.getElementById('love-screen');
+            
+            playRomanticMusic();
+            
+            initialScreen.style.display = 'none';
+            loveScreen.style.display = 'block';
+            
+            setTimeout(() => {
+                loveScreen.classList.add('show');
+                createFloatingHearts();
+                createMusicNotes();
+                startLoveCounter();
+            }, 100);
+        }
+
+        function startLoveCounter() {
+            function updateCounter() {
+                const now = new Date();
+                const timeDiff = now - loveStartDate;
+                
+                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+                
+                document.getElementById('loveCounter').innerHTML = 
+                    `${days} gün, ${hours} saat, ${minutes} dakika, ${seconds} saniye ❤️`;
+            }
+            
+            updateCounter();
+            setInterval(updateCounter, 1000);
+        }
+
+        function showSurprise() {
+            alert('🎉 Sürpriz: Seni dünyada en çok seven kişi benim! Her gün sana daha çok aşık oluyorum! ❤️');
+            createHeartExplosion();
+        }
+
+        function playLoveSound() {
+            // Daha uzun ve güzel bir melodi
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            const melody = [
+                { freq: 523.25, duration: 0.6 }, // C5
+                { freq: 587.33, duration: 0.6 }, // D5
+                { freq: 659.25, duration: 0.6 }, // E5
+                { freq: 698.46, duration: 0.6 }, // F5
+                { freq: 783.99, duration: 1.2 }, // G5
+                { freq: 659.25, duration: 0.6 }, // E5
+                { freq: 587.33, duration: 0.6 }, // D5
+                { freq: 523.25, duration: 1.2 }, // C5
+                { freq: 659.25, duration: 0.6 }, // E5
+                { freq: 783.99, duration: 0.6 }, // G5
+                { freq: 880.00, duration: 1.2 }, // A5
+                { freq: 783.99, duration: 2.4 }, // G5
+            ];
+            
+            let currentTime = audioContext.currentTime;
+            
+            melody.forEach((note) => {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(note.freq, currentTime);
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0, currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.15, currentTime + 0.1);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, currentTime + note.duration);
+                
+                oscillator.start(currentTime);
+                oscillator.stop(currentTime + note.duration);
+                
+                currentTime += note.duration;
+            });
+        }
+
+        function createHeartExplosion() {
+            const colors = ['#ff6b6b', '#ff8e8e', '#ffa8a8', '#ffb3b3', '#ffc1c1'];
+            
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.style.position = 'fixed';
+                    heart.style.left = '50%';
+                    heart.style.top = '50%';
+                    heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                    heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    heart.style.pointerEvents = 'none';
+                    heart.style.zIndex = '1000';
+                    
+                    const angle = (Math.PI * 2 * i) / 30;
+                    const velocity = Math.random() * 300 + 200;
+                    const vx = Math.cos(angle) * velocity;
+                    const vy = Math.sin(angle) * velocity;
+                    
+                    document.body.appendChild(heart);
+                    
+                    let x = 0, y = 0;
+                    const gravity = 500;
+                    const startTime = Date.now();
+                    
+                    function animate() {
+                        const elapsed = (Date.now() - startTime) / 1000;
+                        x = vx * elapsed;
+                        y = vy * elapsed + 0.5 * gravity * elapsed * elapsed;
+                        
+                        heart.style.transform = `translate(${x}px, ${y}px) rotate(${elapsed * 360}deg)`;
+                        heart.style.opacity = Math.max(0, 1 - elapsed / 3);
+                        
+                        if (elapsed < 3) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            heart.remove();
+                        }
+                    }
+                    
+                    animate();
+                }, i * 50);
+            }
+        }
+
+        function playRomanticMusic() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            const melody = [
+                { freq: 523.25, duration: 0.5 }, // C5
+                { freq: 587.33, duration: 0.5 }, // D5
+                { freq: 659.25, duration: 0.5 }, // E5
+                { freq: 698.46, duration: 0.5 }, // F5
+                { freq: 783.99, duration: 1.0 }, // G5
+                { freq: 659.25, duration: 0.5 }, // E5
+                { freq: 587.33, duration: 0.5 }, // D5
+                { freq: 523.25, duration: 1.0 }, // C5
+            ];
+            
+            let currentTime = audioContext.currentTime;
+            
+            function playMelody() {
+                melody.forEach((note) => {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(note.freq, currentTime);
+                    oscillator.type = 'sine';
+                    
+                    gainNode.gain.setValueAtTime(0, currentTime);
+                    gainNode.gain.linearRampToValueAtTime(0.1, currentTime + 0.1);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, currentTime + note.duration);
+                    
+                    oscillator.start(currentTime);
+                    oscillator.stop(currentTime + note.duration);
+                    
+                    currentTime += note.duration;
+                });
+                
+                setTimeout(() => {
+                    currentTime = audioContext.currentTime;
+                    playMelody();
+                }, 3000);
+            }
+            
+            playMelody();
+        }
+
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('floating-hearts');
+            const heartSymbols = ['❤️', '💕', '💖', '💗', '💝', '💘', '💞', '💓'];
+            
+            function addHeart() {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                heart.style.fontSize = (Math.random() * 15 + 20) + 'px';
+                
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 7000);
+            }
+            
+            setInterval(addHeart, 200);
+            
+            for(let i = 0; i < 15; i++) {
+                setTimeout(addHeart, i * 100);
+            }
+        }
+
+        function createMusicNotes() {
+            const musicSymbols = ['♪', '♫', '♬', '♩', '♭', '♯', '𝄞'];
+            
+            function addMusicNote() {
+                const note = document.createElement('div');
+                note.className = 'music-note';
+                note.innerHTML = musicSymbols[Math.floor(Math.random() * musicSymbols.length)];
+                note.style.left = Math.random() * 100 + '%';
+                note.style.animationDuration = (Math.random() * 2 + 5) + 's';
+                note.style.animationDelay = Math.random() * 2 + 's';
+                
+                document.body.appendChild(note);
+                
+                setTimeout(() => {
+                    note.remove();
+                }, 9000);
+            }
+            
+            setInterval(addMusicNote, 600);
+        }
+
+        window.addEventListener('load', () => {
+            createMusicNotes();
+        });
+    </script>
+</body>
+</html>
